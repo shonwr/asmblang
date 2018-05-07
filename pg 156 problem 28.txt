@@ -1,0 +1,22 @@
+	;input = some char
+	;whatever character minus 1 
+	;output inputted character minus 1
+	BR main ;Branch around data
+
+	ch: .BLOCK 2 ;Storage for one integer #2d 
+
+	;
+
+
+
+	main: LDBA 0xFC15,d
+
+	SUBA 1,i
+
+	STBA 0xFC16,d
+
+	STOP
+
+
+
+	.END

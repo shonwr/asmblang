@@ -1,0 +1,81 @@
+;Soliman, Sean 
+;Test 1 - CoSci 416 Spring 2018
+;Due 5/7/18
+
+BR main
+	B: .BLOCK 2 ;total number of bottles
+          F: .BLOCK 2 ;# of full boxes 
+          PF:.BLOCK 2 ;# of bottles for partially-filled box
+          PFTMP: .BLOCK 2 ;Temp space to calculate # of partially filled box
+          ;Totals
+          FT: .BLOCK 2 ;total calculated full boxes
+          PFTC: .BLOCK 2 ;Temp space for partially-filled box calculation 
+          PFC: .BLOCK 2 ;total calculated partially-filled box 
+          T: .BLOCK 2 ;total calculated mailing cost 
+
+	
+                    ;Calculate # of full boxes
+          main:	DECI B,d ;Load input 
+	LDWA B,d 
+	ASRA ;ASRA 3 times to divide total # of bottles by 8
+          ASRA 
+          ASRA ;B/8 
+	STWA F,d ;Stores # of filled boxes to F
+	STRO msg1,d ;String out msg1 (Number of full boxes = )
+	DECO F,d ;Decimal out Calulated # of filled boxes
+	LDBA "\n",i ;New line character
+          STBA charOut,d
+          ;Result = Number of full boxes = (B/8)
+
+          ;Calculate # of partially-filled boxes
+          LDWA F,d ;Load # of full boxes to calculate partially-filled boxes
+          ASLA
+          ASLA
+          ASLA ;Full box *8
+          STWA PFTMP,d ;Store total number of bottles in filled boxes into PFTMP
+          LDWA B,d ;Load user input              
+          SUBA PFTMP,d ;Subtract total number of bottles in filled boxes from user input to solve for partially-filled # of bottles
+          STWA PF,d ;Store partially-filled number of bottles into PF
+          STRO msg2,d ;String out msg2 (Number of partially-filled boxes = )
+          DECO PF,d
+          LDBA "\n",i
+          STBA charOut,d
+          ;Result = Number of partially-filled boxes = B-PFTMP ;PFTMP = F*8
+         
+          ;Calculate full boxes mailing cost       
+          LDWA F,d ;load input to calculate full boxes mailing cost
+          ASLA ;ASLA (*16) to multiply and calculate mailing cost for full boxes
+          ASLA
+          ASLA
+          ASLA
+          STWA FT,d ;Stores total calculated full boxes to FT
+
+;FIX PARTIALLY-FILLED BOX CALCULATION
+          ;Calculate partially-filled box mailing cost
+          LDWA PF,d ;load # of bottles for partially-filled box to calculate partially-filled box cost
+          ASLA
+          ASLA
+          STWA PFTC,d
+          LDWA PFTC,d
+          SUBA 2,i
+          STWA PFC,d
+          
+          
+          ;Add full boxes mailing cost (FT) + partially-filled box mailing cost (PFT) & store into T
+          LDWA FT,d ;Load full boxes mailing cost total
+          ADDA PFC,d ;Add partially-filled mailing cost total to full box mailing cost total
+          STWA T,d ;store added FT and PFT to T
+          LDBA "\n",i 
+          STBA charOut,d
+          STRO msg3,d ;String out msg3 (Total mailing cost = ) 
+          DECO T,d ;Decimal out calculated mailing cost # 
+          ;Result = Total mailing cost =           
+
+	STOP
+	
+          msg1: .ASCII "Number of full boxes = \x00"
+          msg2: .ASCII "Number of partially-filled boxes = \x00"
+          msg3: .ASCII "Total mailing cost = $\x00"
+
+	.END
+	

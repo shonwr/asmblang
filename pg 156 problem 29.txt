@@ -1,0 +1,60 @@
+BR main ;Branch around data
+num1: .BLOCK 2 ;Storage for one integer #2d 
+num2: .BLOCK 2 ;Storage for one integer #2d 
+
+;output num1 = 
+main: LDBA "n",i 
+STBA 0xFC16,d
+LDBA "u",i 
+STBA 0xFC16,d
+LDBA "m",i 
+STBA 0xFC16,d
+LDBA "1",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+LDBA " =",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+
+;outputs input numnber 
+LDBA 0xFC15,d ;(Get number)
+STBA num1,d ;(Output number)
+LDBA num1,d
+STBA 0xFC16,d 
+
+
+;new line(enter key)
+LDBA "\n",i
+STBA 0xFC16,d
+
+;outputs num2 = 
+LDBA "n",i 
+STBA 0xFC16,d
+LDBA "u",i 
+STBA 0xFC16,d
+LDBA "m",i 
+STBA 0xFC16,d
+LDBA "2",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+LDBA " =",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+
+;outputs -
+LDBA "-",i
+
+;outputs input number 
+STBA 0xFC16,d
+LDBA num1,d ;(Get number)
+STBA 0xFC16,d ;(Output number)
+
+
+
+STOP
+
+.END

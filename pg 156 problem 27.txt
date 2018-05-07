@@ -1,0 +1,58 @@
+;input = 
+;4
+;2 
+
+BR main ;Branch around data
+width: .BLOCK 2 ;Storage for one integer #2d 
+length: .BLOCK 2 ;Storage for one integer #2d 
+perim: .BLOCK 1 ;Storage for perim/total
+;
+;"w = 2
+main: LDBA "w",i
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+LDBA " =",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+DECI width,d ;Decimal in (Get number)
+DECO width,d ;Decimal out (Output number)
+; new line(enter key)
+LDBA "\n",i
+STBA 0xFC16,d
+
+
+LDBA "l",i
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+LDBA " =",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+
+DECI length,d ;Decimal in (Get number)
+DECO length,d ;Decimal out (Output number)
+
+LDBA "\n",i
+STBA 0xFC16,d
+
+LDBA "p",i
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+LDBA " =",i 
+STBA 0xFC16,d
+LDBA " ",i
+STBA 0xFC16,d
+
+;calculate perim
+LDWA width,d
+ADDA 8,i
+STWA perim,d
+DECO perim,d
+
+STOP
+
+.END

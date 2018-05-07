@@ -1,0 +1,17 @@
+BR main
+	num: .BLOCK 2
+	
+	main: DECI num,d
+	LDWA num,d
+	ASRA
+	ASRA
+	ASRA
+	ASRA
+	STWA num,d
+	STRO msg,d
+	DECO num,d
+	LDBA '\n',i
+	STBA charOut,d
+	STOP
+	msg: .ASCII "num = \x00"
+	.END

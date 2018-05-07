@@ -1,0 +1,34 @@
+;(with + length)*2
+;width = some input number
+;length = some input number
+;perim = calculation
+BR main
+	width:	.BLOCK 2
+	length:	.BLOCK 2
+	perim:	.BLOCK 2 ;scanf("%d%d",&width,&length)
+	
+	main:	DECI width,d
+	DECI length,d
+	LDWA width,d 
+	ADDA length,d ;width + length
+	ASLA ;(width + lenght)*2
+	STWA perim,d ;perim = (width + lenght)*2
+	STRO msg1,d
+	DECO width,d
+	LDBA "\n",i
+	STBA charOut,d
+	STRO msg2,d
+	DECO length,d
+	LDBA "\n",i
+	STBA charOut,d
+	STRO msg3,d
+	DECO perim,d
+	LDBA "\n",i
+	STBA charOut,d
+	STOP
+	
+	msg1: .ASCII "width = \x00"
+	msg2: .ASCII "length = \x00"
+	msg3: .ASCII "perim = \x00"
+	.END
+	

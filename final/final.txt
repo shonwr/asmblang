@@ -1,0 +1,66 @@
+;Soliman, Sean
+;Co Sci 416 - Comp Arch
+;Final
+
+;Input = 10 20 30 40 -9999
+;Ouput = 40 30 20 10
+
+0000 120003      BR main 
+         data:  .EQUATE 0 ;struct field #2d 
+         next:  .EQUATE 2 ;struct field #2h
+         ;      
+         ;****** main()
+         first: .EQUATE 4 ;local variable #2h
+         first2:.EQUATE 4 ;local variable #2h
+         p:     .EQUATE 2 ;local variable #2h
+         p2:    .EQUATE 2 ;local variable #2h
+         value: .EQUATE 0 ;local variable #2h
+0003 580006 main:            SUBSP 6,i ;push #first #p #value
+0006 C00000                  LDWA 0,i ;first = 0
+0009 E30004                  STWA first, s 
+000C 330000                  DECI value, s ;scanf("%d", &value);
+000F C30000 while:           LDWA value, s ;while (value != -9999)
+0012 A0D8F1                  CPWA -9999, i
+0015 18003F                  BREQ endWh
+0018 C30004                  LDWA first, s ;p = first
+001B E30002                  STWA p,s
+001E C00004                  LDWA 4,i ;first = (...) malloc(...)
+0021 24006A                  CALL malloc ;allocate #data #next
+0024 EB0004                  STWX first, s
+0027 C30000				     LDWA value,s ;first ->next = p
+002A C38000                  LDWX data,i
+002D E70004                  STWA first,sfx
+0030 C30002                  LDWA p,s ;first->next = p
+0033 C80002                  LDWX next,i
+0036 E70004                  STWA first, sfx
+0039 330000                  DECI value,s ;scanf("%d", &value)
+003C 12000F                  BR while
+003F C30004 endWh:           LDWA first,s ;for (p = first
+0042 E30002                  STWA p,s
+0045 C30002 for:             LDWA p,s ;p != 0
+0048 A00000                  CPWA 0,i
+004B 180066                  BREQ endFor
+004E C80000                  LDWX data,i ;printf("%d", p->data)
+0051 3F0002                  DECO p,sfx
+0054 D00020                  LDBA ' ',i
+0057 F1FC16                  STBA charOut,d
+005A C80002                  LDWX next,i ;p = p->next)
+005D C70002                  LDWA p,sfx
+0060 E30002                  STWA p,s
+0063 120045                  BR for
+0066 500006 endFor:          ADDSP 6,i ;pop #value #p #first
+0069 00                      STOP
+            ;
+            ;******malloc()
+            ;      Precondition: A contains number of bytes
+            ;      Postcondition: X contains pointer to bytes
+006A C90074 malloc:          LDWX hpPtr,d ;returned pointer
+006D 610074                  ADDA hpPtr,d ;allocate from heap 
+0070 E10074                  STWA hpPtr,d ;update hpPtr
+0073 01                      RET
+0074 0076   hpPtr:           .Addrss heap ;address of next free byte
+0076 00     heap:            .BLOCK 1 ;first byte in the heap
+0077                         .END
+
+
+
